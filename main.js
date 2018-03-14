@@ -1,41 +1,60 @@
-function parkingA() {
-    var canvas;
-    for (let index = 0; index < 14; index++) {
-        canvas = document.getElementById("Canvas" + index + "");
-        var ctx = canvas.getContext("2d");
-        var grd = ctx.createLinearGradient(0, 0, 50, 200);
-        grd.addColorStop(0, "green");
-        grd.addColorStop(1, "white");
-        ctx.fillStyle = grd;
-        ctx.fillRect(0, 0, 300, 200);
+var serialport =require("serialport");
+var WebSocketServer = require("ws").Server;
+
+var SerialPort = serialport.SerialPort;
+var portName = process.argv[2];
+
+var SERVER_PORT = 8081;
+var wss =  new WebSocketServer({port: SERVER_PORT});
+var connections = new Array;
+
+var myPort = new SerialPort(portName,{
+    baudRate:9600,
+    parser:serialport.parsers.readline("\r\n")
+});
+
+myPort.on('open', onOpen);
+myPort.on('data', onData);
+myPort.on('close', showPortClose);
+myPort.on('error', showError);
+
+function onOpen(){
+    console.log("Open Connection");
+}
+
+function showPortClose(){
+    console.log("port closed.");
+}
+
+function showError(error){
+    console.log("Serial port error: " + error);
+}
+
+var arreglo;
+function onData(data){
+    var cadena = data;
+    arreglo = cadena.split(",");
+    console.log(arreglo);
+    if(connections.length > 0){
+        broadcast(data);
     }
 }
 
-function changeColor(index, color) {
-    var canvas = document.getElementById("Canvas" + index + "");
-    var ctx = canvas.getContext("2d");
-    var grd = ctx.createLinearGradient(0, 0, 50, 200);
-    if (color == 0) {
-        grd.addColorStop(0, "red");
-    } else {
-        grd.addColorStop(0, "green");
-    }
-    grd.addColorStop(1, "white");
-    ctx.fillStyle = grd;
-    ctx.fillRect(0, 0, 300, 200);
+wss.on("connection", HandleConnection);
+
+function HandleConnection(client) {
+    console.log("New Connection");
+    connections.push(client);
+
+    client.on('close', function(){
+        console.log("Connection closed");
+        var position = connections.indexOf(client);
+        connections.splice(position,1);
+    });
 }
 
-function changeParking(id) {
-    if (document.getElementById) {
-        var parking1 = document.getElementById("parking"+id+"1");
-        var parking2 = document.getElementById("parking"+id+"2");        
-        parking1.style.display = (parking1.style.display == 'none') ? 'block' : 'none';
-        parking2.style.display = (parking2.style.display == 'none') ? 'block' : 'none';        
-    }else{
-        console.log("No matching");
+function broadcast(data) {
+    for (myConnection in connections){
+        connections[myConnection].send(data);
     }
-}
-window.onload = function () {
-    parkingA();
-    changeParking("B");
 }
