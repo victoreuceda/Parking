@@ -12,6 +12,18 @@ function draw() {
 function openSocket() {
     console.log("Open");
 }
+
+var counter = 10;
+var sumar = (function () {
+    return function () {return counter += 1;}
+    document.getElementById("myText").innerHTML = counter;
+})();
+
+var restar = (function () {
+    return function () {return counter -= 1;}
+    document.getElementById("myText").innerHTML = counter;
+})();
+
 var array;
 function showData(result) {
     array=result.data;
@@ -46,8 +58,10 @@ function changeColor(index, color) {
     var grd = ctx.createLinearGradient(0, 0, 50, 200);
     if (color == 1) {
         grd.addColorStop(0, "red");
+        restar();
     } else {
         grd.addColorStop(0, "green");
+        sumar();
     }
     grd.addColorStop(1, "white");
     ctx.fillStyle = grd;
@@ -67,4 +81,5 @@ function changeParking(id) {
 window.onload = function () {
     parkingA();
     changeParking("B");
+    document.getElementById("myText").innerHTML = counter;
 }
