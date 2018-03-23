@@ -1,44 +1,29 @@
 body {
+    background-image: url("./asfalto.png");
     font: 400 1em/1.5 "Neuton";
     color: rgba(255, 255, 255, 0.25);
     text-align: center;
     margin: 0;
   }
 
-  p {
-    text-transform: uppercase;
-    letter-spacing: .5em;
-    display: inline-block;
-    width: 40em;
-  }
   canvas {
     width:150px;
     height:200px;
     border-left:25px solid #ffff00;
     border-right:25px solid #ffff00;
-    margin: 5px;
+    margin: 10px;
   }
+
   .First {
     border-top:25px solid #656565;
     border-bottom:25px solid #ffff00;
+    -webkit-transform: skew(-10deg);
   }
+
   .Second {
     border-top:25px solid #ffff00;
     border-bottom:25px solid #656565;
-  }
-  p span {
-    font: 700 4em/1 "Oswald", sans-serif;
-    letter-spacing: 0;
-    display: block;
-    margin: 0 auto;
-    text-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
-    background: url(http://f.cl.ly/items/010q3E1u3p2Q0j1L1S1o/animated_text_fill.png) repeat-y;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: aitf 80s linear infinite;
-    -webkit-transform: translate3d(0, 0, 0);
-    -webkit-backface-visibility: hidden;
+    -webkit-transform: skew(-10deg);
   }
   
   @-webkit-keyframes aitf {
@@ -49,3 +34,19 @@ body {
       background-position: 100% 50%;
     }
   }
+
+  h1 {
+    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+    font-size: 92px;
+    text-align: center;
+    text-transform: uppercase;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1.retroshadow {
+    color: #2c2c2c;
+    background-color: #d5d5d5;
+    letter-spacing: .05em;
+    text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
+  }
+  

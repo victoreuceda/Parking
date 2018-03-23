@@ -30,11 +30,11 @@ function showError(error){
     console.log("Serial port error: " + error);
 }
 
-var arreglo;
+var array;
 function onData(data){
-    var cadena = data;
-    arreglo = cadena.split(",");
-    console.log(arreglo);
+    var string = data;
+    array = string.split(",");
+    console.log(array);
     if(connections.length > 0){
         broadcast(data);
     }

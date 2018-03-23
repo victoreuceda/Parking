@@ -17,21 +17,19 @@ function showData(result) {
     array=result.data;
     array = result.data.split(",");
     console.log(array);
-    if(array[0]==1){
+    if(array[0]==1 || array[1]==1){
         changeParking("A");
-    }
-    if(array[1]==1){
         changeParking("B");
-    }   
+    }
     console.log(array[0]);   
-    for (let index = 0; index < array.length-2; index++) {
+    for (let index = 2; index < array.length; index++) {
         changeColor(index,array[index]);
     }
 }
 
 function parkingA() {
     var canvas;
-    for (let index = 0; index < 14; index++) {
+    for (let index = 2; index < 16; index++) {
         canvas = document.getElementById("Canvas" + index + "");
         var ctx = canvas.getContext("2d");
         var grd = ctx.createLinearGradient(0, 0, 50, 200);
@@ -46,7 +44,7 @@ function changeColor(index, color) {
     var canvas = document.getElementById("Canvas" + index + "");
     var ctx = canvas.getContext("2d");
     var grd = ctx.createLinearGradient(0, 0, 50, 200);
-    if (color == 0) {
+    if (color == 1) {
         grd.addColorStop(0, "red");
     } else {
         grd.addColorStop(0, "green");
